@@ -1,4 +1,4 @@
-import { ApiError } from "../utils/Error.js";
+import { ApiError } from "../utils/error.js";
 import { Podcast } from "../models/podcast.model.js";
 import { User } from "../models/user.model.js";
 import { Response } from "../utils/response.js";

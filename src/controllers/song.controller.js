@@ -1,5 +1,5 @@
 import { Song } from "../models/song.model.js";
-import { ApiError } from "../utils/Error.js";
+import { ApiError } from "../utils/error.js";
 import { User } from "../models/user.model.js";
 import { Response } from "../utils/response.js";
 import { Like } from "../models/like.model.js";
@@ -9,7 +9,7 @@ const createSong = async (req, res) => {
     try {
         const user = req.user;
         const { title, duration, audio, thumbnail } = req.body;
-        if ([title, duration, audio, thumbnail].some((field) => { 
+        if ([title, duration, audio, thumbnail].some((field) => {
             if (!field || field.trim() === "") { return true; }
         })) {
             throw new ApiError(400, "All fields are required!");
@@ -24,7 +24,7 @@ const createSong = async (req, res) => {
         if (!song) {
             throw new ApiError(500, "Internal error in creating the song");
         }
-        return res.status(200).json(new Response(200, {song: song}, "song created!"));
+        return res.status(200).json(new Response(200, { song: song }, "song created!"));
     } catch (error) {
         console.log(error);
     }
@@ -38,7 +38,7 @@ const getUserSongs = async (req, res) => {
         const songs = await User.aggregate([
             {
                 $match: {
-                    "_id": new mongoose.Types.ObjectId(user._id),   
+                    "_id": new mongoose.Types.ObjectId(user._id),
                 }
             },
             {
@@ -57,13 +57,13 @@ const getUserSongs = async (req, res) => {
         ]);
         if (!songs || songs.length === 0) { throw new ApiError(500, "Internal error in fetching songs"); }
         const userSongs = songs[0].userSongs;
-        return res.status(200).json(new Response(200, { userSongs: userSongs }, "user songs fetched!")); 
+        return res.status(200).json(new Response(200, { userSongs: userSongs }, "user songs fetched!"));
     } catch (error) {
         console.log(error);
     }
 }
 
-const deleteSong = async (req, res) => { 
+const deleteSong = async (req, res) => {
     try {
         const user = req.user;
         const { songId } = req.params;
