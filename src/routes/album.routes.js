@@ -4,7 +4,7 @@ import { addSongToAlbum, createAlbum, deleteAlbum, removeSongFromAlbum } from ".
 const albumRouter = express.Router()
 
 albumRouter.route("/create").post(createAlbum)
-albumRouter.route("/delete").delete(deleteAlbum)
+albumRouter.route("/delete/:albumId").delete(deleteAlbum)
 albumRouter.route("/addSong/:songId/:albumId").patch(addSongToAlbum)
 albumRouter.route("/removeSong/:songId/:albumId").patch(removeSongFromAlbum)
 
